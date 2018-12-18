@@ -1,0 +1,550 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh" xmlns:wb="http://open.weibo.com/wb" class="gr__paintschainer_preferred_tech">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="shortcut icon" href="http://paintschainer.preferred.tech/images/favicon.ico">
+<link rel="mask-icon" href="http://paintschainer.preferred.tech/images/safari-pinned-tab.svg" color="#c90000">
+
+<meta name="apple-mobile-web-app-title" content="PaintsChainer">
+<meta name="application-name" content="PaintsChainer">
+
+<title>
+TransImage.
+</title>
+
+
+<!-- JS -->
+<script src="{% static '/js/jquery.min.js' %}"> </script>
+<script src="{% static '/js/jquery.cookie.min.js' %}"> </script>
+<script src="{% static '/js/jquery-ui.min.js' %}"> </script>
+<script src="{% static '/js/bootstrap.min.js' %}"> </script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+<link rel="stylesheet" href="{% static 'css/paints_chainer.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/skin00.css' %}">
+<link rel="stylesheet" href="{% static 'css/Generator.css' %}">
+<link rel="stylesheet" href="{% static 'css/Home.css' %}">
+
+<style type="text/css">
+a:hover {color:white;} 
+a:visited {color:white;} 
+a:link {color:white;} 
+a {color:white;}
+input{ vertical-align:middle; margin:0; padding:0}
+.file-box{ position:relative;width:100%}
+.txt{ height:26px; border:1px solid #cdcdcd; width:180px;}
+.file{ position:absolute; top:0; left:40px; height:30px; filter:alpha(opacity:0);opacity:0;width:250px }
+</style>
+
+</head> 
+<body  id="colorize-page" data-gr-c-s-loaded="true" style="background-color: #fff;">
+
+<nav id="top-nav" class="navbar navbar-default">
+
+  <div class="nav-container container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+      </button>
+      <div class="logo">
+        <a href="127.0.0.1/home/">
+          <img src="{% static 'svg/logo.svg'  %}" width="138" height="32">
+        </a>
+      </div>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <span class="handle upload-button" style="color:#e82524">
+            <img src="{% static 'svg/upload.svg' %}">
+            Upload
+          </span>
+        </li>
+        <li>
+          <span class="handle preset-button" style="color:#e82524">
+            <img src="{% static 'svg/brush.svg' %}">
+            Specification
+          </span>
+        </li>
+        <li>
+          <a class="handle" href="http://paintschainer.preferred.tech/webui/howto/" style="color:#e82524">
+            <img src="{% static 'svg/info-q.svg' %}">
+            Term of Service
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+<div id="main-container">
+    <div class="progress progress-striped active" style="background-color: #fff4f4">
+        <div id="progress-bar" class="progress-bar progress-bar-danger" role="progressbar"
+             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+             style="width: 1%;">
+            <span class="sr-only">10% 完成（危险）</span>
+        </div>
+    </div>
+
+    <div class="col-md-4" style="min-height: 392px;border-left:1px solid #ddd;padding-left:25px"> 
+        <div class="row">
+            <h3 class="col-md-8" style="color:rgb(189,28,27);">
+                <span> Past Image</span>
+            </h3>
+        </div>
+        <div class="row">
+            <h6 class="col-md-12" style="color:rgb(189, 98, 98);">
+                <span> The past thing is memorable......</span>
+            </h6>
+        </div>
+        <div class="generator">  
+            <div class="result-wrapper" style="width:300px; vertical-align:middle; ">
+                <img id="base1" src="{{ IMG0 }}" class="img-rounded img-thumbnail"  onclick="showBig(1);" data-toggle="modal" data-target="#img_origin">
+            </div>
+
+            <div class="file-box" style="text-align:center">
+              <form id="form-upload" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+             <input type='text' name='textfield' id='textfield' class='txt' />  
+             <button type='button' class="btn btn-primary" style="background-color:rgb(189, 28, 27);border-color:rgb(150,26,25);height: 30px;width:70px;"> View </button>
+             <input type="file" name="fileField" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
+
+             <button type="button" name="submit" onclick="uploadimg();" class="btn btn-primary" style="background-color:rgb(189, 28, 27);border-color:rgb(150,26,25);height: 30px;width:70px;" > Upload </button>
+              </form>
+            </div>
+
+        </div>
+    </div>
+    <p id="moveflag" hidden="hidden" > 0 </p> 
+    <p id="isupload" hidden="hidden" > 0 </p> 
+    <p id="isgenerate" hidden="hidden" > 0 </p>
+
+    <div class="col-md-4 options-container">
+        <div class="options">
+            <div class="row">
+                <h3 class="col-md-2" style="color:rgb(189,28,27);">
+                    <span> Options</span>
+                </h3>
+            </div>
+            <div class="row">
+                <div class="col-md-6 option">
+                    <h5>
+                        <span>Vangogh</span>
+                    </h5>
+                    <div class="btn-group" role="group">
+                        <p hidden="hidden"> 0 </p> 
+                        <button type="button" class="btn btn-default" style="outline: 0px; background-color: rgb(189, 28, 27); color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.125) 0px 3px 5px inset;">
+                            <p hidden="hidden"> 0 </p>
+                            <span>Close</span>
+                        </button>
+                        <button type="button"  class="btn btn-default" style="outline: 0px;">
+                            <p hidden="hidden"> 1 </p>
+                            <span>Open</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 option">
+                    <h5>
+                        <span>Chinese</span>
+                    </h5>
+                    <div class="btn-group" role="group">
+                        <p hidden="hidden"> 0 </p> 
+                        <button type="button" class="btn btn-default" style="outline: 0px; background-color: rgb(189, 28, 27); color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.125) 0px 3px 5px inset;">
+                            <p hidden="hidden"> 0 </p> 
+                            <span>Close</span>
+                        </button>
+                        <button type="button" class="btn btn-default" style="outline: 0px;">
+                            <p hidden="hidden"> 1 </p> 
+                            <span>Open</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 option">
+                    <h5>
+                        <span>LinePaint</span>
+                    </h5>
+                    <div class="btn-group" role="group">
+                        <p hidden="hidden"> 0 </p> 
+                        <button type="button"  class="btn btn-default" style="outline: 0px; background-color: rgb(189, 28, 27); color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.125) 0px 3px 5px inset;">
+                            <p hidden="hidden"> 0 </p>
+                            <span>Close</span>
+                        </button>
+                        <button type="button"  class="btn btn-default" style="outline: 0px;">
+                            <p hidden="hidden"> 1 </p>
+                            <span>Open</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 option">
+                    <h5>
+                        <span>OilPaint</span>
+                    </h5>
+                    <div class="btn-group" role="group">
+                        <p hidden="hidden"> 0 </p> 
+                        <button type="button"  class="btn btn-default" style="outline: 0px; background-color: rgb(189, 28, 27); color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.125) 0px 3px 5px inset;">
+                            <p hidden="hidden"> 0 </p>
+                            <span>Close</span>
+                        </button>
+                        <button type="button"  class="btn btn-default" style="outline: 0px;">
+                            <p hidden="hidden"> 1 </p>
+                            <span>Open</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 option" style="margin-top:50px">
+                    <button id="btn_generate" class="btn btn-primary" onclick="generate();" style="background-color:rgb(189, 28, 27);border-color:rgb(150,26,25);">
+                    
+                    <span> Generate</span>
+                    </button>
+                </div>
+            </div>
+
+
+        </div>  
+    </div>
+
+    <div class="col-md-4" style="min-height: 392px;border-left:1px solid #ddd;padding-left:25px"> 
+        <div class="row">
+            <h3 class="col-md-8" style="color:rgb(189,28,27);">
+                <span> Future Image</span>
+            </h3>
+        </div>
+        <div class="row">
+            <h6 class="col-md-12" style="color:rgb(189, 98, 98);">
+                <span> Always believe that something wonderful is about to happen.</span>
+            </h6>
+        </div>
+        <div class="generator" style="text-align: center">  
+            <div class="result-wrapper" style="width:300px;">
+                <img id="base2" src="{{ IMG1 }}" class="img-rounded img-thumbnail" onclick="showBig(2);" data-toggle="modal" data-target="#img_result">                
+            </div>
+
+            <button id="btn_download" class="btn btn-primary" style="background-color:rgb(189, 28, 27);border-color:rgb(150,26,25);">
+            <span id="btn_download_content"> Download</span>
+            </button>
+        </div>
+    </div>    
+
+
+</div>
+
+
+<footer id="footer" style="border:1px solid transparent;background-color:#bd1c1b;margin-top: 50px;padding:5px;margin-left: 2px;margin-right: 2px">
+  <div class="container">
+
+    <div class="staff" style="margin-bottom: 0">
+      <div class="provided-by">
+        <h3>Producer</h3>
+        <a href="http://www.kirska.tech/" target="_blank">
+          <img src="{% static 'img/kirska.png'  %}" width="14"> kirska
+        </a>
+      </div>
+      <div class="collaborated-by">
+        <h3>协助</h3>
+        <div class="horizontal-box">
+          <p>
+            <a href="http://paintschainer.preferred.tech/index_zh.html" target="_blank">
+              <img src="http://paintschainer.preferred.tech/images/favicon.ico" height="16" width="16"> Paintschainer
+            </a></p>
+          <p>
+            <a href="https://github.com/" target="_blank">
+              <img src="{% static 'img/github.png'  %}" height="18" width="18"> Github
+            </a></p>
+          <p>
+            <a href="https://make.girls.moe/#/" target="_blank">
+              <img src="{% static 'img/makegirlsmoe.ico'  %}" height="18" width="18"> MakeGirlsMoe
+            </a>
+          </p>
+          <p>
+            <a href="https://www.aliyun.com/">
+              <img src="https://img.alicdn.com/tps/TB16hl5LpXXXXXRXVXXXXXXXXXX-198-46.png" height="17">
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <div class="provided-by" style="width:40%">
+        <h3>Copyright</h3>
+          Copyright@2018 Pan Yancen - <a href="http://www.jlu.edu.cn/" style="txt-decoration:underline;">Jilin University</a> Bachelor Thesis - Free use 
+      </div>
+
+    </div>
+
+  </div>
+</footer>
+
+
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm text-center" id="img_show" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-dismiss="modal">
+    <div class="modal-dialog modal-sm" style="display: inline-block; width: auto;" data-dismiss="modal">
+        <div class="modal-content">
+            <img  id="imgshow" style="width: 600px" src="/media/original.jpg?t=1" >
+        </div>
+    </div>    
+</div>
+
+<!--
+<div class="modal fade bs-example-modal-sm text-center" id="img_result" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
+    <div class="modal-dialog modal-sm" style="display: inline-block; width: auto;" data-dismiss="modal">
+        <div class="modal-content">
+            <img  id="imgresult" style="width: 600px" src="/media/style.jpg?=1" >
+        </div>
+    </div>    
+</div>
+
+-->
+
+<script>
+$(document).ready(function(){
+    var accu=0;
+    setInterval(function(){
+        
+        var flag = $("#moveflag").text();
+        
+        if (flag==0)
+        {
+            accu=0;
+            return;
+        }
+        accu+=1;
+        if (flag==1&&accu>60 )
+        {
+            
+            var now=$("#progress-bar").css("width");
+
+            now = now.slice(0,-2);
+
+            now = parseInt(now);
+            if (now<500)
+            {
+                $("#progress-bar").css("width", (now+80)+"px");  
+            }
+
+        } 
+    },10);
+
+  $.ajaxSetup({cache : false });
+  $(".btn-group").children('button').click(function(){
+        var nums= $(this).children('p').text();
+
+        $(this).parent().children('p').text(nums);
+        var nums2=$(this).parent().children('p').text();
+
+        drawOptionStyle($(this).parent());
+        checkOption();
+  });
+    $(".options").children(":last").children().children().attr("disabled",true);
+    $("#btn_download").attr("disabled",true);
+
+    $("#img_origin").on("hidden.bs.model",function(e){$(this).removeData();});  
+    $("#img_result").on("hidden.bs.model",function(e){$(this).removeData();});  
+
+/*
+    var filechange=function(event){
+    var files = event.target.files, file;
+    if (files && files.length > 0) {
+        // 获取目前上传的文件
+        file = files[0];// 文件大小校验的动作
+        if(file.size > 1024 * 1024 * 2) {
+            alert('图片大小不能超过 2MB!');
+            return false;
+        }
+        // 获取 window 的 URL 工具
+        var URL = window.URL || window.webkitURL;
+        // 通过 file 生成目标 url
+        var imgURL = URL.createObjectURL(file);
+        //用attr将img的src属性改成获得的url
+        $("#img-change").attr("src",imgURL);
+        // 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
+        // URL.revokeObjectURL(imgURL);
+    }
+};
+*/
+});
+
+function showBig(option)
+{
+    var isupload = $("#isupload").text();
+    if (isupload==0)
+        return;
+    if (option==1)
+    {
+       $("#imgshow").attr("src","/media/original.jpg"+"?t=" + Math.random());
+    }
+    else
+    {
+       var isgenerate = $("#isgenerate").text();
+       if (isgenerate==0)
+            return ;
+       $("#imgshow").attr("src","/media/style.jpg"+"?t=" + Math.random());        
+    }
+    $('#img_show').modal('show');
+}
+
+
+
+function generate(){
+
+    $("#progress-bar").css("width", "1%");
+
+
+    $("#btn_generate").text("Generating");
+    $("#btn_generate").attr("disabled",true);  
+
+
+    var start = $(".btn-group");
+
+    var v1 = start.eq(0).children(":first").text();
+    var v2 = start.eq(1).children(":first").text();
+    var v3 = start.eq(2).children(":first").text();    
+    var v4 = start.eq(3).children(":first").text();
+    //alert(v1+"."+v2+"."+v3+"."+v4);
+    formData={'v1':v1,'v2':v2,'v3':v3,'v4':v4}
+    $("#moveflag").text("1");
+    $.ajax({
+        url: '/home/generate/',
+        type: 'POST',
+        datatype: 'json', 
+        data: formData,
+    }).done(function(res) {
+        $.ajaxSetup({cache : false });
+        $("#base2").attr("src","/media/style.jpg"+"?t=" + Math.random());
+        $("#btn_generate").text("Generate");
+        $("#btn_generate").attr("disabled",false); 
+        $("#moveflag").text("0");
+        $("#progress-bar").css("width", "100%");
+        $("#btn_download").attr("disabled",false);
+        $("#btn_download_content").text("");
+        $("#btn_download_content").prepend("<a href='/media/style.jpg' style='text-decoration:none;rgb(255, 255, 255);' download='download'>Download</a>");
+        $("#isgenerate").text("1");
+
+    }).fail(function(res) {
+        alert("Failed!");
+        $("#btn_generate").text("Generate");
+        $("#btn_generate").attr("disabled",false); 
+        $("#moveflag").text("0");        
+        $("#progress-bar").css("width", "100%");
+
+    });
+    
+
+
+
+}
+
+
+
+function uploadimg(){
+
+    img_file = $("#fileField")[0].files[0];
+    
+    $("#isupload").text("1");
+
+    //alert(img_file.value);
+    if(img_file.size > 1920 * 1024 * 3) {
+        alert('图片大小不能超过 2MB!');
+        return false;        
+    }
+
+
+    var formData=new FormData();
+    formData.append("img_file",img_file);
+    formData.append("haha","12345");
+
+    $.ajax({
+        url: '/home/upload/',
+        type: 'POST',
+        cache: false,
+        data: formData,
+        processData: false,
+        contentType: false
+    }).done(function(res) {
+        $("#isupload").text("1");
+        $.ajaxSetup({cache : false });
+        $("#base1").attr("src","/media/original.jpg"+"?t=" + Math.random());
+    }).fail(function(res) {
+
+    });
+
+
+}
+
+
+function drawOptionStyle(group)
+{
+    var good_no=group.children('p').text();
+
+    var now =group.children('p');
+    for (var i=0;i<2;i++)
+    {
+        now = now.next();
+        if (i==good_no)
+        {
+            now.css("outline","0px");
+            now.css("background-color","rgb(189, 28, 27)");
+            now.css("color","rgb(255, 255, 255)");
+            now.css("box-shadow","rgba(0, 0, 0, 0.125) 0px 3px 5px inset");    
+        }
+        else
+        {
+            now.css("outline","0px");
+            now.css("background-color","#fff");
+            now.css("color","#333");
+            now.css("box-shadow","#ccc"); 
+        }
+    }
+
+}
+
+function checkOption()
+{
+    var cnt=0;
+    var start = $(".btn-group");
+    var isupload = $("#isupload").text();
+
+    for (var i=0;i<4;i++)
+    {
+        var tmp = start.eq(i).children(":first").text();
+        if (tmp==1)
+            cnt=cnt+1;
+    }
+    if (cnt==0||isupload==0)
+    {
+        $(".options").children(":last").children().children().attr("disabled",true);    
+    }
+    else
+    {
+        $(".options").children(":last").children().children().attr("disabled",false);
+    }
+}
+
+</script>
+
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,386 @@
+body.no-scroll {
+    overflow: hidden;
+}
+
+#main-container {
+  position: relative;
+  overflow: hidden;
+}
+
+#tagline {
+  position: relative;
+  width: 100%;
+  text-align: left;
+}
+
+#tagline #cover-image {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  left: 0px;
+  overflow: hidden;
+  width: 100%;
+  height: 440px;
+}
+
+#tagline #cover-image #back-photo {
+  background: url(/images/design-v2/cover201801.jpg) center center / cover no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+#tagline #cover-ui {
+  max-width: 800px;
+  margin: auto;
+  padding: 0px 30px 0px 240px;
+  position: relative;
+  height: 440px;
+  font-weight: 100;
+}
+
+#tagline .photo-description {
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  width: 100%;
+}
+
+#tagline .photo-description a {
+  position: relative;
+  left: -220px;
+  display: block;
+  width: 200px;
+  margin: auto;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+#tagline .main-tagline {
+  white-space:pre-wrap;
+  padding: 60px 0px 30px 0px;
+  max-width: 450px;
+  font-size: 30px;
+  line-height: 1.56;
+  color: #ffffff;
+  font-weight: 100;
+  /* text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8); */
+}
+
+#tagline .hover-button {
+  background-color: #f51c73;
+  font-weight: 200;
+  width: 260px;
+  height: 60px;
+  margin: 20px auto 20px 0px;
+  padding-top: 19px;
+  font-size: 14px;
+}
+
+#tagline .spacer {
+  color: white;
+  max-width: 180px;
+  margin: auto;
+  font-size: 12px;
+}
+
+/* --- PR section --- */
+#pr-section {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1400px;
+  margin: auto
+}
+
+#pr-section .headline {
+  flex-grow: 1;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
+}
+
+#pr-section .headline .point {
+  cursor: pointer;
+  position: relative;
+  flex-grow: 0;
+  margin: 10px;
+  width: 250px;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+#pr-section .headline .point .caption {
+  padding: 0px 18px 11px 18px;
+  color: #aaa39c;
+}
+
+#pr-section .headline .point h2 {
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 1.4em;
+  color: #191816;
+}
+
+#pr-section .headline .point img {
+  width: 250px;
+  height: 179px;
+}
+
+#pr-section .more {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#pr-section .more .wire-button {
+  background-color: #f4f4f4;
+  margin: auto;
+  width: 220px;
+  height: 60px;
+  font-size: 14px;
+  box-align: center;
+}
+
+#pr-section .more .wire-button a {
+  display: block;
+  width: 220px;
+  height: 60px;
+}
+
+#pr-section .more .howto-button {
+  padding-top: 18px;
+}
+
+#pr-section .more .pixiv-button {
+  padding-top: 12px;
+}
+
+#pr-section .more .pixiv-button small {
+  display: block;
+  font-size: 8px;
+  font-weight: 200;
+}
+
+/* --- Info section --- */
+#info-section {
+  background-color: white;
+}
+
+#info-section h2 {
+  font-size: 24px;
+  font-weight: 200;
+  color: #aaa39c;
+  margin: 15px 0px;
+}
+
+#info-section .info-container {
+  max-width: 1220px;
+  display: flex;
+  margin: auto;
+  padding: 20px 20px 40px 20px;
+}
+
+#info-section #social-timeline {
+  flex-shrink: 4;
+  margin: 20px;
+  width: 100%;
+}
+
+#info-section #social-timeline h2 {
+  font-family: wask, Helvetica Neue, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN", Meiryo, sans-serif;
+}
+
+#info-section #social-timeline .box {
+  border: 1px solid #E1E1E1;
+  border-radius: 2px;
+}
+
+#info-section #news {
+  flex-shrink: 3;
+  margin: 20px;
+}
+
+#info-section #news .box {
+  border-radius: 2px;
+  background-color: #edebe8;
+  padding: 20px;
+}
+
+#info-section #news .box .strong {
+  font-size: 17px;
+}
+
+#info-section #news .box .small {
+  font-size: 12px;
+}
+
+#info-section #news .box img {
+  float: right;
+  display: block;
+  width: 150px;
+  margin: 0px 0px 0px 5px;
+}
+
+#info-section #news .box p::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+#info-section #news a {
+  color: #191816;
+}
+
+#info-section #news p {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  line-height: 1.5;
+}
+
+#info-section #news p:last-child {
+  border: none;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#info-section #news p.new:before {
+  content: url(../images/design-v2/new-icon.svg);
+  margin-right: 5px;
+  position: relative;
+  top: 4px;
+}
+
+#app {
+  position: relative;
+  top: 0px;
+}
+
+#app.app-init {
+  top: 200px;
+  position: absolute;
+  width: 100%;
+}
+
+@media (max-width: 1150px) {
+  #pr-section .headline .point {
+    width: 200px;
+  }
+
+  #pr-section .headline .point img {
+    width: 200px;
+    height: 142px;
+  }
+
+  #pr-section .headline .point h2 {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 992px) {
+  #tagline .main-tagline {
+    font-size: 29px;
+  }
+
+  #pr-section .headline .point {
+    width: 165px;
+  }
+
+  #pr-section .headline .point img {
+    width: 165px;
+    height: 118px;
+  }
+}
+
+@media (max-width: 768px) {
+  #tagline #cover-image {
+    height: 600px;
+  }
+
+  #tagline #cover-image #back-photo {
+    background: url(/images/design-v2/cover201801mobile.jpg) center center / cover no-repeat;
+    width: 100%;
+    height: 100%;
+  }
+
+  #tagline .photo-description a {
+    bottom: 210px;
+    left: -80px;
+  }
+
+  #tagline #cover-ui {
+    padding: 10px;
+    height: 600px;
+    text-align: center;
+  }
+
+  #tagline .main-tagline {
+    font-size: 20px;
+    padding: 20px 0px 310px 0px;
+    max-width: 100%;
+  }
+
+  #tagline .hover-button {
+    margin: 20px auto;
+  }
+
+  #info-section .info-container {
+    flex-direction: column;
+  }
+
+  #info-section #social-timeline {
+    width: auto;
+  }
+
+  #pr-section .headline {
+    flex-wrap: wrap;
+    padding: 20px 40px;
+  }
+
+  #pr-section .headline .point {
+    width: 200px;
+  }
+
+  #pr-section .headline .point .caption {
+    padding: 15px 10px;
+  }
+
+  #pr-section .headline .point img {
+    width: 200px;
+    height: 142px;
+  }
+
+  #pr-section .headline .point h2 {
+    font-size: 11px;
+    margin: 0px;
+  }
+}
+
+@media (max-width: 576px) {
+  #tagline .main-tagline {
+    font-size: 18px;
+  }
+
+  #pr-section {
+    padding: 0px 0px 20px 0px;
+  }
+
+  #pr-section .headline {
+    padding: 40px 0px 20px 0px;
+  }
+
+  #pr-section .headline .point {
+    width: 165px;
+    margin: 5px;
+  }
+
+  #pr-section .headline .point img {
+    width: 165px;
+    height: 118px;
+  }
+
+  #pr-section .more {
+    padding: 20px 0px;
+  }
+}
